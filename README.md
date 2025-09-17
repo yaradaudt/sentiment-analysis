@@ -15,7 +15,7 @@ This project performs binary sentiment analysis (positive vs. negative) on IMDB 
 ### Project structure
 
 - `Notebook.ipynb`: End-to-end workflow (load data → clean → vectorize → train → evaluate).
-- `IMDB Dataset.csv`: The dataset used for training and evaluation (not tracked by git).
+- `IMDB Dataset.csv`: The dataset used for training and evaluation.
 - `requirements.txt`: Python dependencies to run the notebook.
 
 ### Getting started
