@@ -2,19 +2,28 @@
 
 **Purpose**
 
-This project performs binary sentiment analysis (positive vs. negative) on IMDB movie reviews using a traditional machine learning approach with scikit-learn. A TF‑IDF representation is built from the text data and a Logistic Regression classifier is trained and evaluated on a dataset of 50,000 reviews.
+This project performs binary sentiment analysis (positive vs. negative) on IMDB movie reviews using two approaches: a classic machine learning pipeline with scikit-learn and a simple feed-forward neural network with PyTorch. Text is vectorized via TF‑IDF; models are trained and evaluated on 50,000 reviews.
 
 **Key points**
 
 - **Dataset**: IMDB reviews (`IMDB Dataset.csv`) with 50,000 rows and 2 columns: `review` (text) and `sentiment` (label: `positive` or `negative`).
 - **Preprocessing**: Lowercasing, punctuation removal, and stopword removal using NLTK English stopwords.
 - **Features**: `TfidfVectorizer` from scikit-learn.
-- **Model**: `LogisticRegression` from scikit-learn.
-- **Evaluation**: Accuracy, classification report, and confusion matrix on a 80/20 train/test split. In a sample run, the model achieved about ~0.90 accuracy on the test set.
+- **Models**:
+  - `LogisticRegression` (scikit-learn)
+  - 2-layer feed-forward network (PyTorch) trained with Adam and BCE loss
+- **Evaluation**: Accuracy, classification report, and confusion matrix on an 80/20 train/test split.
+
+### Final results
+
+- **Scikit-learn (Logistic Regression)**: accuracy ≈ 0.90
+- **PyTorch (FFN)**: accuracy ≈ 0.89
+
+Given the similar performance and lower complexity, the scikit-learn model is recommended for production scenarios in this project.
 
 ### Project structure
 
-- `Notebook.ipynb`: End-to-end workflow (load data → clean → vectorize → train → evaluate).
+- `notebooks/Sentiment-Analysis.ipynb`: End-to-end workflow (load → clean → vectorize → train → evaluate) for both scikit-learn and PyTorch models.
 - `IMDB Dataset.csv`: The dataset used for training and evaluation.
 - `requirements.txt`: Python dependencies to run the notebook.
 
@@ -33,7 +42,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3) Ensure NLTK stopwords are available. The notebook includes the following line and will download as needed:
+3) Ensure NLTK stopwords are available. The notebook includes the following and will download as needed:
 
 ```python
 import nltk
@@ -45,14 +54,23 @@ If running in a restricted environment, pre-download the stopwords before execut
 4) Open and run the notebook:
 
 ```bash
-jupyter notebook Notebook.ipynb
+jupyter notebook notebooks/Sentiment-Analysis.ipynb
+# or
+jupyter lab notebooks/Sentiment-Analysis.ipynb
 ```
 
-Run all cells to reproduce preprocessing, training, and evaluation.
+Run all cells to reproduce preprocessing, training, evaluation, and example real-time predictions for both models.
+
+### Reproducing the results
+
+- Place `IMDB Dataset.csv` at the project root (already included here).
+- Execute the notebook cells in order. Key outputs to look for:
+  - Vectorized feature matrix shape (e.g., `(50000, 180395)`).
+  - Test metrics for scikit-learn and PyTorch (accuracy, classification report, confusion matrix).
+  - Example predictions for custom input sentences.
 
 ### Notes
 
-- The current workflow uses classic ML (TF‑IDF + Logistic Regression). You can swap in other linear classifiers (e.g., Linear SVM) or adjust vectorizer parameters (e.g., n-grams, min_df) to explore trade-offs.
-- If you change preprocessing, clear and rerun the notebook to rebuild features and retrain the model.
-
+- You can explore other linear models (e.g., Linear SVM) or adjust TF‑IDF parameters (n-grams, min_df) for different trade-offs.
+- The PyTorch section demonstrates handling sparse TF‑IDF data by converting batches to dense tensors, with `DataLoader` to manage memory usage.
 
